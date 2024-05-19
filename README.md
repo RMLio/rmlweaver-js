@@ -1,6 +1,6 @@
-# Meamer JS -
+# RMLWeaver-JS -
 
-**Meamer JS** is a Node.js tool designed to execute dot files using npm. Dot files are commonly used for describing directed graphs. This tool efficiently performs dot file operations using RxJS streams.
+**RMLWeaver-JS** is a Node.js tool designed to execute dot files using npm. Dot files are commonly used for describing directed graphs. This tool efficiently performs dot file operations using RxJS streams.
 
 ## Usage
 
