@@ -1,0 +1,11 @@
+digraph {
+    0 [ label = "id:Source_0 \lSource Opeartor\ltype: File \lreference iterator: Iterator { reference: Some(\"$.countries[*]\"), reference_formulation: JSONPath, fields: [Field { alias: \"Country Code\", reference: \"Country Code\", reference_formulation: JSONPath, inner_fields: [] }, Field { alias: \"Name\", reference: \"Name\", reference_formulation: JSONPath, inner_fields: [] }] } \lconfig: {\l  \"path\": \"country_info.json\"\l}\l             " ]
+    1 [ label = "id:Projection_1 \lProjection Operator\lProjected attributes: Name, Country Code, " ]
+    2 [ label = "id:ExtendOp_2 \lExtension Operator\lExtended pairs: \l ?tm0_p0_0 -> Iri { inner_function: UriEncode { inner_function: Constant { value: \"http://example.com/name\" } } }\l?tm0_sm -> Iri { inner_function: UriEncode { inner_function: Template { value: \"http://example.com/{Country Code}/{Name}\" } } }\l?tm0_o0_0 -> Literal { inner_function: Reference { value: \"Name\" } }" ]
+    3 [ label = "id:Serialize_3 \lSerializer Operator\lFormat type: NQuads\lTemplate: ?tm0_sm ?tm0_p0_0 ?tm0_o0_0 ." ]
+    4 [ label = "id:Sink_4 \lTarget Operator\ltype: StdOut \ldata format: NQuads \lconfig: {}\l             " ]
+    0 -> 1 [ label = "Fragment:default" ]
+    1 -> 2 [ label = "Fragment:default" ]
+    2 -> 3 [ label = "Fragment:default" ]
+    3 -> 4 [ label = "Fragment:default" ]
+}

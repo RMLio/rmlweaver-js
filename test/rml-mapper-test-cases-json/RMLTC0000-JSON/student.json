@@ -1,0 +1,14 @@
+{
+  "sporten": {
+    "namen": "Gertje",
+    "groottes": {
+      "metric": {"Gertje": 3},
+      "randomother": {"Gertje":  "32.3"}
+    }
+  },
+  "map1": {
+    "students": [{
+      "Name":"Venus"
+    }]
+  }
+}

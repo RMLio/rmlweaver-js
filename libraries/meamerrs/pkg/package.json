@@ -1,0 +1,11 @@
+{
+  "name": "meamer-rs",
+  "version": "0.1.0",
+  "files": [
+    "meamer_rs_bg.wasm",
+    "meamer_rs.js",
+    "meamer_rs.d.ts"
+  ],
+  "main": "meamer_rs.js",
+  "types": "meamer_rs.d.ts"
+}

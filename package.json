@@ -1,0 +1,31 @@
+{
+  "name": "meamer",
+  "version": "0.1.0",
+  "description": "Meamer implementation in JS",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "mocha test",
+    "execute_dot": "node --max-old-space-size=8000 src/index.js"
+  },
+  "author": "Tristan Verbeken",
+  "license": "MIT",
+  "dependencies": {
+    "dotparser": "^1.1.1",
+    "fast-csv": "^4.3.6",
+    "handlebars": "^4.7.8",
+    "mocha": "^10.2.0",
+    "most": "^1.9.0",
+    "node-fetch": "^3.3.2",
+    "papaparse": "^5.4.1",
+    "rxjs": "^7.8.1"
+  },
+  "type": "module",
+  "devDependencies": {
+    "eslint": "^8.52.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-n": "^16.2.0",
+    "eslint-plugin-promise": "^6.1.1",
+    "esm": "^3.2.25"
+  }
+}

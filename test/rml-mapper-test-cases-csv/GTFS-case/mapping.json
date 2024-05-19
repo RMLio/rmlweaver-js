@@ -1,0 +1,174 @@
+{
+  "nodes": [
+    {
+      "id": "Source_0",
+      "operator": {
+        "type": "SourceOp",
+        "config": {
+          "path": "stops.csv",
+          "source_type": "File",
+          "root_iterator": {
+            "reference": null,
+            "reference_formulation": "CSVRows",
+            "fields": [],
+            "alias": null
+          }
+        }
+      }
+    },
+    {
+      "id": "Projection_1",
+      "operator": {
+        "type": "ProjectOp",
+        "config": {
+          "projection_attributes": [
+            "stop_id",
+            "parent_station"
+          ]
+        }
+      }
+    },
+    {
+      "id": "Fragmenter_2",
+      "operator": {
+        "type": "FragmentOp",
+        "config": {
+          "from": "default",
+          "to": [
+            "default",
+            "join_0",
+            "join_0"
+          ]
+        }
+      }
+    },
+    {
+      "id": "Join_3",
+      "operator": {
+        "type": "JoinOp",
+        "config": {
+          "left_right_attr_pairs": [
+            [
+              "parent_station",
+              "stop_id"
+            ]
+          ],
+          "join_type": "InnerJoin",
+          "predicate_type": "Equal",
+          "join_alias": "join_0"
+        }
+      }
+    },
+    {
+      "id": "Extend_4",
+      "operator": {
+        "type": "ExtendOp",
+        "config": {
+          "?tm0_p0_0": {
+            "type": "Iri",
+            "inner_function": {
+              "type": "UriEncode",
+              "inner_function": {
+                "type": "Constant",
+                "value": "http://vocab.gtfs.org/terms#parentStation"
+              }
+            }
+          },
+          "?tm0_o0_0": {
+            "type": "Iri",
+            "inner_function": {
+              "type": "UriEncode",
+              "inner_function": {
+                "type": "TemplateString",
+                "value": "http://transport.linkeddata.es/madrid/metro/stops/{join_0_stop_id}"
+              }
+            }
+          },
+          "?tm0_sm": {
+            "type": "Iri",
+            "inner_function": {
+              "type": "UriEncode",
+              "inner_function": {
+                "type": "TemplateString",
+                "value": "http://transport.linkeddata.es/madrid/metro/stops/{stop_id}"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "Serialize_5",
+      "operator": {
+        "type": "SerializerOp",
+        "config": {
+          "template": "?tm0_sm ?tm0_p0_0 ?tm0_o0_0 .",
+          "format": "NQuads"
+        }
+      }
+    },
+    {
+      "id": "Sink_6",
+      "operator": {
+        "type": "TargetOp",
+        "config": {
+          "target_type": "StdOut",
+          "data_format": "NQuads"
+        }
+      }
+    }
+  ],
+  "node_holes": [],
+  "edge_property": "directed",
+  "edges": [
+    [
+      0,
+      1,
+      {
+        "fragment": "default"
+      }
+    ],
+    [
+      1,
+      2,
+      {
+        "fragment": "default"
+      }
+    ],
+    [
+      2,
+      3,
+      {
+        "fragment": "join_0"
+      }
+    ],
+    [
+      2,
+      3,
+      {
+        "fragment": "join_0"
+      }
+    ],
+    [
+      3,
+      4,
+      {
+        "fragment": "default"
+      }
+    ],
+    [
+      4,
+      5,
+      {
+        "fragment": "default"
+      }
+    ],
+    [
+      5,
+      6,
+      {
+        "fragment": "default"
+      }
+    ]
+  ]
+}

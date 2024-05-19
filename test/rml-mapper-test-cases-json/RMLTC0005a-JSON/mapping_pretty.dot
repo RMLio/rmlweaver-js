@@ -1,0 +1,11 @@
+digraph {
+    0 [ label = "id:Source_0 \lSource Opeartor\ltype: File \lreference iterator: Iterator { reference: Some(\"$.persons[*]\"), reference_formulation: JSONPath, fields: [Field { alias: \"lname\", reference: \"lname\", reference_formulation: JSONPath, inner_fields: [] }, Field { alias: \"amount\", reference: \"amount\", reference_formulation: JSONPath, inner_fields: [] }, Field { alias: \"fname\", reference: \"fname\", reference_formulation: JSONPath, inner_fields: [] }] } \lconfig: {\l  \"path\": \"ious.json\"\l}\l             " ]
+    1 [ label = "id:Projection_1 \lProjection Operator\lProjected attributes: lname, amount, fname, " ]
+    2 [ label = "id:ExtendOp_2 \lExtension Operator\lExtended pairs: \l ?tm0_p0_0 -> Iri { inner_function: UriEncode { inner_function: Constant { value: \"http://example.com/owes\" } } }\l?tm0_o0_0 -> Literal { inner_function: Reference { value: \"amount\" } }\l?tm0_sm -> Iri { inner_function: UriEncode { inner_function: Template { value: \"http://example.com/{fname};{lname}\" } } }" ]
+    3 [ label = "id:Serialize_3 \lSerializer Operator\lFormat type: NQuads\lTemplate: ?tm0_sm <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> .\l?tm0_sm ?tm0_p0_0 ?tm0_o0_0 ." ]
+    4 [ label = "id:Sink_4 \lTarget Operator\ltype: StdOut \ldata format: NQuads \lconfig: {}\l             " ]
+    0 -> 1 [ label = "Fragment:default" ]
+    1 -> 2 [ label = "Fragment:default" ]
+    2 -> 3 [ label = "Fragment:default" ]
+    3 -> 4 [ label = "Fragment:default" ]
+}

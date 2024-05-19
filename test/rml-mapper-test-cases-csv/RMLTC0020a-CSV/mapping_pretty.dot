@@ -1,0 +1,11 @@
+digraph {
+    0 [ label = "id:Source_0 \lSource Opeartor\ltype: File \lreference iterator: Iterator {\l    reference: None,\l    reference_formulation: CSVRows,\l    fields: [],\l    alias: None,\l} \lconfig: {\l  \"path\": \"student.csv\"\l}\l             " ]
+    1 [ label = "id:Projection_1 \lProjection Operator\lProjected attributes: Name, " ]
+    2 [ label = "id:ExtendOp_2 \lExtension Operator\lExtended pairs: \l ?tm0_sm -> Iri { inner_function: UriEncode { inner_function: TemplateString { value: \"{Name}\" } } }\l?tm0_o0_0 -> Iri { inner_function: UriEncode { inner_function: Constant { value: \"http://xmlns.com/foaf/0.1/Person\" } } }\l?tm0_p0_0 -> Iri { inner_function: UriEncode { inner_function: Constant { value: \"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\" } } }" ]
+    3 [ label = "id:Serialize_3 \lSerializer Operator\lFormat type: NQuads\lTemplate: ?tm0_sm ?tm0_p0_0 ?tm0_o0_0 ." ]
+    4 [ label = "id:Sink_4 \lTarget Operator\ltype: StdOut \ldata format: NQuads \lconfig: {}\l             " ]
+    0 -> 1 [ label = "Fragment:default" ]
+    1 -> 2 [ label = "Fragment:default" ]
+    2 -> 3 [ label = "Fragment:default" ]
+    3 -> 4 [ label = "Fragment:default" ]
+}

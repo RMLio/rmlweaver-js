@@ -1,0 +1,11 @@
+digraph {
+    0 [ label = "id:Source_0 \lSource Opeartor\ltype: File \lreference iterator: Iterator { reference: Some(\"$.students[*]\"), reference_formulation: JSONPath, fields: [Field { alias: \"FirstName\", reference: \"FirstName\", reference_formulation: JSONPath, inner_fields: [] }, Field { alias: \"ID\", reference: \"ID\", reference_formulation: JSONPath, inner_fields: [] }] } \lconfig: {\l  \"path\": \"student.json\"\l}\l             " ]
+    1 [ label = "id:Projection_1 \lProjection Operator\lProjected attributes: ID, FirstName, " ]
+    2 [ label = "id:ExtendOp_2 \lExtension Operator\lExtended pairs: \l ?tm0_sm -> Iri { inner_function: UriEncode { inner_function: Template { value: \"http://example.com/Student/{ID}/{FirstName}\" } } }\l?tm0_p1_0 -> Iri { inner_function: UriEncode { inner_function: Constant { value: \"http://example.com/id\" } } }\l?tm0_p0_0 -> Iri { inner_function: UriEncode { inner_function: Constant { value: \"http://www.w3.org/1999/02/22-rdf-syntax-ns#type\" } } }\l?tm0_o1_0 -> Literal { inner_function: Reference { value: \"ID\" } }\l?tm0_o0_0 -> Iri { inner_function: UriEncode { inner_function: Constant { value: \"http://xmlns.com/foaf/0.1/Person\" } } }\l?tm0_sm_gm0 -> Iri { inner_function: UriEncode { inner_function: Constant { value: \"http://example.com/PersonGraph\" } } }\l?tm0_p2_0 -> Iri { inner_function: UriEncode { inner_function: Constant { value: \"http://xmlns.com/foaf/0.1/name\" } } }\l?tm0_o2_0 -> Literal { inner_function: Reference { value: \"FirstName\" } }" ]
+    3 [ label = "id:Serialize_3 \lSerializer Operator\lFormat type: NQuads\lTemplate: ?tm0_sm ?tm0_p0_0 ?tm0_o0_0 ?tm0_sm_gm0 .\l?tm0_sm ?tm0_p1_0 ?tm0_o1_0 ?tm0_sm_gm0 .\l?tm0_sm ?tm0_p2_0 ?tm0_o2_0 ?tm0_sm_gm0 ." ]
+    4 [ label = "id:Sink_4 \lTarget Operator\ltype: StdOut \ldata format: NQuads \lconfig: {}\l             " ]
+    0 -> 1 [ label = "Fragment:default" ]
+    1 -> 2 [ label = "Fragment:default" ]
+    2 -> 3 [ label = "Fragment:default" ]
+    3 -> 4 [ label = "Fragment:default" ]
+}
