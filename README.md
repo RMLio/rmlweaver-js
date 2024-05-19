@@ -36,3 +36,7 @@ npm test
 - (Not Sure) Fix that extend operator does not push a value if the value for the template is missing. (Test 2c)
 - Optimize code
 - Write benchmarks.
+
+## Acknowledgement
+This proof of concept algebraic mapping engine is implemented by [Tristan Verbeken](https://github.com/TR1VER)
+
