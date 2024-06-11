@@ -50,7 +50,9 @@ export class TargetOp extends Operator {
 
         this.setComplete(() => {
             debugLog("TargetOp complete")
-            fileStream.end();
+            if (fileStream !== undefined) {
+                fileStream.end();
+            }
         });
 
     }
