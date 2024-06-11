@@ -47,12 +47,10 @@ export class SourceOp extends Operator {
                                     quoteLevel = quoteLevel + 1
                                 }
                                 if (line[i] === "," && quoteLevel % 2 === 0) { // field has ended
-                                    if(quoteLevel === 0){
                                         v[csvFields[fieldIndex]] = line.substring(fieldStart + quoteLevel / 2, i - quoteLevel / 2)
                                         fieldIndex++;
                                         fieldStart = i + 1;
                                         quoteLevel = 0
-                                    }
                                 }
                             }
                             v[csvFields[fieldIndex]] = line.substring(fieldStart + quoteLevel / 2, line.length - quoteLevel / 2)
