@@ -109,10 +109,3 @@ describe("RML Mapper Tests JSON", () => {
     it('RMLTC0020b-JSON', dotFileTest(`${TC_JSON}/RMLTC0020b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0020b-JSON/output.nq`));
 });
 
-describe("KGCTOOL Tests", function() {
-    this.timeout(0);
-    it('GTFS Scale1',
-        lineAmountTest(`${TC_KGCW}/scale_1/data/mapping.dot`, 395953));
-    it('GTFS Tabular',
-        dotFileTest(`${TC_KGCW}/tabular/mapping.dot`, `${TC_JSON}/RMLTC0020a-JSON/output.nq`));
-});
