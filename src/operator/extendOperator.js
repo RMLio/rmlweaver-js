@@ -94,10 +94,13 @@ export class ExtendOp extends Operator {
                 }
 
                 return (obj) => {
+                    let temp_val = {}; 
                     for (let variable in var_function_pairs) {
-                        var_function_pairs[variable] = var_function_pairs(obj)[key]
+                        let nest_func = var_function_pairs[variable]
+                        nest_func(obj)
+                        temp_val[variable] = obj[key]
                     }
-                    obj[key] = template2(var_function_pairs)
+                    obj[key] = template2(temp_val)
                 }
 
             case 'Concatenate':
@@ -110,8 +113,10 @@ export class ExtendOp extends Operator {
                     mapping.right_value,
                 )
                 return (obj) => {
-                    const left_value = left_function(obj)[key]
-                    const right_value = right_function(obj)[key]
+                    left_function(obj)
+                    const left_value = obj[key]
+                    right_function(obj)
+                    const right_value = obj[key]
                     obj[key] = left_value + mapping.separator + right_value
                 }
 
