@@ -47,7 +47,7 @@ export class SourceOp extends Operator {
                     let handleLine = (line) => {
                         csvFields = line.split(',') // Insert csv fields
                         // After the first line is processed, change the handler to process subsequent lines
-                        if (iterator.alias !== undefined) {
+                        if (iterator.alias !== null) {
                             for (
                                 let i = 0, len = csvFields.length;
                                 i < len;
