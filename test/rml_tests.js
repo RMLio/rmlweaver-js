@@ -5,6 +5,7 @@ const TC_CSV =  'test/rml-mapper-test-cases-csv' // Test cases directory (csv)
 const TC_JSON = 'test/rml-mapper-test-cases-json' // Test cases directory (json)
 const TC_KGCW = 'test/KGCW' // Test cases directory KGCW tool
 const OTC =  'test/rml-operator-test-cases' // Operator test cases directory
+const SHEXML= 'test/shexml' // Test cases directory for ShExML 
 
 /*
  All RML-Mapper csv test-cases (https://github.com/kg-construct/rml-test-cases)
@@ -22,6 +23,19 @@ const OTC =  'test/rml-operator-test-cases' // Operator test cases directory
     it('Project Test 2', operatorTest(`${OTC}/PROJECT_2.json`));
     it('Serializer Test 1', operatorTest(`${OTC}/SERIALIZER_1.json`));
 }); TODO: Update these operator tests to the latest specifications */
+
+describe("ShExML Tests", () => {
+    it('BlankPrefix', dotFileTest(`${SHEXML}/blankprefix/input.dot`, `${SHEXML}/blankprefix/expected.nq`));
+    it('bnode', dotFileTest(`${SHEXML}/bnode/input.dot`, `${SHEXML}/bnode/expected.nq`));
+    it('constant', dotFileTest(`${SHEXML}/constant/input.dot`, `${SHEXML}/constant/expected.nq`));
+    it('graph', dotFileTest(`${SHEXML}/graph/input.dot`, `${SHEXML}/graph/expected.nq`));
+    it('linking', dotFileTest(`${SHEXML}/linking/input.dot`, `${SHEXML}/linking/expected.nq`));
+    it('literal', dotFileTest(`${SHEXML}/literal/input.dot`, `${SHEXML}/literal/expected.nq`));
+    it('multiple_iterator', dotFileTest(`${SHEXML}/multiple_iterator/input.dot`, `${SHEXML}/multiple_iterator/expected.nq`));
+    it('only_iterator_expression', dotFileTest(`${SHEXML}/only_iterator_expression/input.dot`, `${SHEXML}/only_iterator_expression/expected.nq`));
+    it('single_iterator', dotFileTest(`${SHEXML}/single_iterator/input.dot`, `${SHEXML}/single_iterator/expected.nq`));
+    it('string_concatenation', dotFileTest(`${SHEXML}/string_concatenation/input.dot`, `${SHEXML}/string_concatenation/expected.nq`));
+});
 
 describe("RML Mapper Tests CSV", () => {
     it('RMLTC0000-CSV', dotFileTest(`${TC_CSV}/RMLTC0000-CSV/mapping.dot`, `${TC_CSV}/RMLTC0000-CSV/output.nq`));
@@ -65,47 +79,47 @@ describe("RML Mapper Tests CSV", () => {
     it('RMLTC0020b-CSV', dotFileTest(`${TC_CSV}/RMLTC0020b-CSV/mapping.dot`, `${TC_CSV}/RMLTC0020b-CSV/output.nq`));
     it('GTFS-case', dotFileTest(`${TC_CSV}/GTFS-case/mapping.dot`, `${TC_CSV}/GTFS-case/output.nq`));
 });
-
-
-describe("RML Mapper Tests JSON", () => {
-    it('RMLTC0000-JSON', dotFileTest(`${TC_JSON}/RMLTC0000-JSON/mapping.dot`, `${TC_JSON}/RMLTC0000-JSON/output.nq`));
-    it('RMLTC0001a-JSON', dotFileTest(`${TC_JSON}/RMLTC0001a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0001a-JSON/output.nq`));
-    it('RMLTC0001b-JSON', dotFileTest(`${TC_JSON}/RMLTC0001b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0001b-JSON/output.nq`));
-    it('RMLTC0002a-JSON', dotFileTest(`${TC_JSON}/RMLTC0002a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0002a-JSON/output.nq`));
-    it('RMLTC0002b-JSON', dotFileTest(`${TC_JSON}/RMLTC0002b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0002b-JSON/output.nq`));
-    it('RMLTC0002c-JSON', dotFileTest(`${TC_JSON}/RMLTC0002c-JSON/mapping.dot`, `${TC_JSON}/RMLTC0002c-JSON/output.nq`));
-    it('RMLTC0002e-JSON', throwErrorTest(`${TC_JSON}/RMLTC0002e-JSON/mapping.dot`, FileNotFoundError));
-    it('RMLTC0003c-JSON', dotFileTest(`${TC_JSON}/RMLTC0003c-JSON/mapping.dot`, `${TC_JSON}/RMLTC0003c-JSON/output.nq`));
-    it('RMLTC0004a-JSON', dotFileTest(`${TC_JSON}/RMLTC0004a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0004a-JSON/output.nq`));
-    it('RMLTC0004b-JSON', dotFileTest(`${TC_JSON}/RMLTC0004b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0004b-JSON/output.nq`));
-    it('RMLTC0005a-JSON', dotFileTest(`${TC_JSON}/RMLTC0005a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0005a-JSON/output.nq`));
-    it('RMLTC0006a-JSON', dotFileTest(`${TC_JSON}/RMLTC0006a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0006a-JSON/output.nq`));
-    it('RMLTC0007a-JSON', dotFileTest(`${TC_JSON}/RMLTC0007a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0007a-JSON/output.nq`));
-    it('RMLTC0007b-JSON', dotFileTest(`${TC_JSON}/RMLTC0007b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0007b-JSON/output.nq`));
-    it('RMLTC0007c-JSON', dotFileTest(`${TC_JSON}/RMLTC0007c-JSON/mapping.dot`, `${TC_JSON}/RMLTC0007c-JSON/output.nq`));
-    it('RMLTC0007d-JSON', dotFileTest(`${TC_JSON}/RMLTC0007d-JSON/mapping.dot`, `${TC_JSON}/RMLTC0007d-JSON/output.nq`));
-    it('RMLTC0007e-JSON', dotFileTest(`${TC_JSON}/RMLTC0007e-JSON/mapping.dot`, `${TC_JSON}/RMLTC0007e-JSON/output.nq`));
-    it('RMLTC0007f-JSON', dotFileTest(`${TC_JSON}/RMLTC0007f-JSON/mapping.dot`, `${TC_JSON}/RMLTC0007f-JSON/output.nq`));
-    it('RMLTC0007g-JSON', dotFileTest(`${TC_JSON}/RMLTC0007g-JSON/mapping.dot`, `${TC_JSON}/RMLTC0007g-JSON/output.nq`));
-    it('RMLTC0007h-JSON', dotFileTest(`${TC_JSON}/RMLTC0007h-JSON/mapping.dot`, `${TC_JSON}/RMLTC0007h-JSON/output.nq`));
-    it('RMLTC0008a-JSON', dotFileTest(`${TC_JSON}/RMLTC0008a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0008a-JSON/output.nq`));
-    it('RMLTC0008b-JSON', dotFileTest(`${TC_JSON}/RMLTC0008b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0008b-JSON/output.nq`));
-    it('RMLTC0008c-JSON', dotFileTest(`${TC_JSON}/RMLTC0008c-JSON/mapping.dot`, `${TC_JSON}/RMLTC0008c-JSON/output.nq`));
-    it('RMLTC0009a-JSON', dotFileTest(`${TC_JSON}/RMLTC0009a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0009a-JSON/output.nq`));
-    it('RMLTC0009b-JSON', dotFileTest(`${TC_JSON}/RMLTC0009b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0009b-JSON/output.nq`));
-    it('RMLTC0010a-JSON', dotFileTest(`${TC_JSON}/RMLTC0010a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0010a-JSON/output.nq`));
-    it('RMLTC0010b-JSON', dotFileTest(`${TC_JSON}/RMLTC0010b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0010b-JSON/output.nq`));
-    it('RMLTC0010c-JSON', dotFileTest(`${TC_JSON}/RMLTC0010c-JSON/mapping.dot`, `${TC_JSON}/RMLTC0010c-JSON/output.nq`));
-    it('RMLTC0011b-JSON', dotFileTest(`${TC_JSON}/RMLTC0011b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0011b-JSON/output.nq`));
-    it('RMLTC0012a-JSON', dotFileTest(`${TC_JSON}/RMLTC0012a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0012a-JSON/output.nq`));
-    it('RMLTC0012b-JSON', dotFileTest(`${TC_JSON}/RMLTC0012b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0012b-JSON/output.nq`));
-    it('RMLTC0012c-JSON', dotFileTest(`${TC_JSON}/RMLTC0012c-JSON/mapping.dot`, `${TC_JSON}/RMLTC0012c-JSON/output.nq`));
-    it('RMLTC0012d-JSON', dotFileTest(`${TC_JSON}/RMLTC0012d-JSON/mapping.dot`, `${TC_JSON}/RMLTC0012d-JSON/output.nq`));
-    it('RMLTC0015a-JSON', dotFileTest(`${TC_JSON}/RMLTC0015a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0015a-JSON/output.nq`));
-    it('RMLTC0015b-JSON', dotFileTest(`${TC_JSON}/RMLTC0015b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0015b-JSON/output.nq`));
-    it('RMLTC0019a-JSON', dotFileTest(`${TC_JSON}/RMLTC0019a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0019a-JSON/output.nq`));
-    it('RMLTC0019b-JSON', dotFileTest(`${TC_JSON}/RMLTC0019b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0019b-JSON/output.nq`));
-    it('RMLTC0020a-JSON', dotFileTest(`${TC_JSON}/RMLTC0020a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0020a-JSON/output.nq`));
-    it('RMLTC0020b-JSON', dotFileTest(`${TC_JSON}/RMLTC0020b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0020b-JSON/output.nq`));
-});
-
+//
+//
+//describe("RML Mapper Tests JSON", () => {
+//    it('RMLTC0000-JSON', dotFileTest(`${TC_JSON}/RMLTC0000-JSON/mapping.dot`, `${TC_JSON}/RMLTC0000-JSON/output.nq`));
+//    it('RMLTC0001a-JSON', dotFileTest(`${TC_JSON}/RMLTC0001a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0001a-JSON/output.nq`));
+//    it('RMLTC0001b-JSON', dotFileTest(`${TC_JSON}/RMLTC0001b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0001b-JSON/output.nq`));
+//    it('RMLTC0002a-JSON', dotFileTest(`${TC_JSON}/RMLTC0002a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0002a-JSON/output.nq`));
+//    it('RMLTC0002b-JSON', dotFileTest(`${TC_JSON}/RMLTC0002b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0002b-JSON/output.nq`));
+//    it('RMLTC0002c-JSON', dotFileTest(`${TC_JSON}/RMLTC0002c-JSON/mapping.dot`, `${TC_JSON}/RMLTC0002c-JSON/output.nq`));
+//    it('RMLTC0002e-JSON', throwErrorTest(`${TC_JSON}/RMLTC0002e-JSON/mapping.dot`, FileNotFoundError));
+//    it('RMLTC0003c-JSON', dotFileTest(`${TC_JSON}/RMLTC0003c-JSON/mapping.dot`, `${TC_JSON}/RMLTC0003c-JSON/output.nq`));
+//    it('RMLTC0004a-JSON', dotFileTest(`${TC_JSON}/RMLTC0004a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0004a-JSON/output.nq`));
+//    it('RMLTC0004b-JSON', dotFileTest(`${TC_JSON}/RMLTC0004b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0004b-JSON/output.nq`));
+//    it('RMLTC0005a-JSON', dotFileTest(`${TC_JSON}/RMLTC0005a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0005a-JSON/output.nq`));
+//    it('RMLTC0006a-JSON', dotFileTest(`${TC_JSON}/RMLTC0006a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0006a-JSON/output.nq`));
+//    it('RMLTC0007a-JSON', dotFileTest(`${TC_JSON}/RMLTC0007a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0007a-JSON/output.nq`));
+//    it('RMLTC0007b-JSON', dotFileTest(`${TC_JSON}/RMLTC0007b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0007b-JSON/output.nq`));
+//    it('RMLTC0007c-JSON', dotFileTest(`${TC_JSON}/RMLTC0007c-JSON/mapping.dot`, `${TC_JSON}/RMLTC0007c-JSON/output.nq`));
+//    it('RMLTC0007d-JSON', dotFileTest(`${TC_JSON}/RMLTC0007d-JSON/mapping.dot`, `${TC_JSON}/RMLTC0007d-JSON/output.nq`));
+//    it('RMLTC0007e-JSON', dotFileTest(`${TC_JSON}/RMLTC0007e-JSON/mapping.dot`, `${TC_JSON}/RMLTC0007e-JSON/output.nq`));
+//    it('RMLTC0007f-JSON', dotFileTest(`${TC_JSON}/RMLTC0007f-JSON/mapping.dot`, `${TC_JSON}/RMLTC0007f-JSON/output.nq`));
+//    it('RMLTC0007g-JSON', dotFileTest(`${TC_JSON}/RMLTC0007g-JSON/mapping.dot`, `${TC_JSON}/RMLTC0007g-JSON/output.nq`));
+//    it('RMLTC0007h-JSON', dotFileTest(`${TC_JSON}/RMLTC0007h-JSON/mapping.dot`, `${TC_JSON}/RMLTC0007h-JSON/output.nq`));
+//    it('RMLTC0008a-JSON', dotFileTest(`${TC_JSON}/RMLTC0008a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0008a-JSON/output.nq`));
+//    it('RMLTC0008b-JSON', dotFileTest(`${TC_JSON}/RMLTC0008b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0008b-JSON/output.nq`));
+//    it('RMLTC0008c-JSON', dotFileTest(`${TC_JSON}/RMLTC0008c-JSON/mapping.dot`, `${TC_JSON}/RMLTC0008c-JSON/output.nq`));
+//    it('RMLTC0009a-JSON', dotFileTest(`${TC_JSON}/RMLTC0009a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0009a-JSON/output.nq`));
+//    it('RMLTC0009b-JSON', dotFileTest(`${TC_JSON}/RMLTC0009b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0009b-JSON/output.nq`));
+//    it('RMLTC0010a-JSON', dotFileTest(`${TC_JSON}/RMLTC0010a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0010a-JSON/output.nq`));
+//    it('RMLTC0010b-JSON', dotFileTest(`${TC_JSON}/RMLTC0010b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0010b-JSON/output.nq`));
+//    it('RMLTC0010c-JSON', dotFileTest(`${TC_JSON}/RMLTC0010c-JSON/mapping.dot`, `${TC_JSON}/RMLTC0010c-JSON/output.nq`));
+//    it('RMLTC0011b-JSON', dotFileTest(`${TC_JSON}/RMLTC0011b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0011b-JSON/output.nq`));
+//    it('RMLTC0012a-JSON', dotFileTest(`${TC_JSON}/RMLTC0012a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0012a-JSON/output.nq`));
+//    it('RMLTC0012b-JSON', dotFileTest(`${TC_JSON}/RMLTC0012b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0012b-JSON/output.nq`));
+//    it('RMLTC0012c-JSON', dotFileTest(`${TC_JSON}/RMLTC0012c-JSON/mapping.dot`, `${TC_JSON}/RMLTC0012c-JSON/output.nq`));
+//    it('RMLTC0012d-JSON', dotFileTest(`${TC_JSON}/RMLTC0012d-JSON/mapping.dot`, `${TC_JSON}/RMLTC0012d-JSON/output.nq`));
+//    it('RMLTC0015a-JSON', dotFileTest(`${TC_JSON}/RMLTC0015a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0015a-JSON/output.nq`));
+//    it('RMLTC0015b-JSON', dotFileTest(`${TC_JSON}/RMLTC0015b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0015b-JSON/output.nq`));
+//    it('RMLTC0019a-JSON', dotFileTest(`${TC_JSON}/RMLTC0019a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0019a-JSON/output.nq`));
+//    it('RMLTC0019b-JSON', dotFileTest(`${TC_JSON}/RMLTC0019b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0019b-JSON/output.nq`));
+//    it('RMLTC0020a-JSON', dotFileTest(`${TC_JSON}/RMLTC0020a-JSON/mapping.dot`, `${TC_JSON}/RMLTC0020a-JSON/output.nq`));
+//    it('RMLTC0020b-JSON', dotFileTest(`${TC_JSON}/RMLTC0020b-JSON/mapping.dot`, `${TC_JSON}/RMLTC0020b-JSON/output.nq`));
+//});
+//

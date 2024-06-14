@@ -1,0 +1,19 @@
+PREFIX : <http://example.com/>
+SOURCE films_csv_file1 <films.csv>
+ITERATOR film_full <csvperrow> {
+    FIELD id <id>
+    FIELD name <name>
+    FIELD year <year>
+    FIELD country <country>
+    FIELD directors <director>
+}
+
+EXPRESSION films <films_csv_file1.film_full >
+
+:Films :[films.id] {
+    a :Film ;
+    :name [films.name] ;
+    :year [films.year] ;
+    :country [films.country] ;
+    :director [films.directors] ;
+}

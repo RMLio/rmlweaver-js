@@ -1,0 +1,20 @@
+PREFIX : <http://ex.com/>
+SOURCE performances_csv <events.csv>
+ITERATOR performances_iterator <csvperrow> {
+   FIELD ids <id>
+   FIELD venues_names <venue_name>
+   FIELD venue_id <venue_id>
+   FIELD lat <lat>
+   FIELD long <long>
+}
+
+EXPRESSION performance_ids <performances_csv.performances_iterator.ids>
+EXPRESSION venue_names <performances_csv.performances_iterator.venues_names>
+EXPRESSION venue_ids <performances_csv.performances_iterator.venue_id>
+EXPRESSION locations <performances_csv.performances_iterator.lat + "-" + performances_csv.performances_iterator.long >
+
+:Performance :[performance_ids] {
+  :venue :[venue_names] ;
+  :venue_id :[venue_ids];
+  :location :[locations];
+}
