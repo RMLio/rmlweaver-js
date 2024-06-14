@@ -1,0 +1,34 @@
+# The input parts
+{
+    # Shows a list of options
+    "Type" = [
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "test",
+        "chore"
+    ]
+    "Scope" = @ # Single line input
+    "Subject" = @
+    "Body" = !@ # Multi-line input
+    "Footer" = !@
+}
+
+# predefined messages
+# this section is optional
+{
+    vb = "chore: version bump"
+    readme = "docs: updated readme"
+}
+
+# The output format
+# Takes the values provided from the input stage
+# and interpolates them in
+${Type} (${Scope}): ${Subject}
+
+${Body}
+
+${Footer}
+

@@ -1,68 +1,70 @@
-import {Operator} from "./Operator.js";
+import { Operator } from './Operator.js'
 
 export class SerializerOp extends Operator {
     constructor(id, config) {
-        super(id, config);
-        let templates;
-        switch(config.format){
-            case("NTriples"):
+        super(id, config)
+        let templates
+        switch (config.format) {
+            case 'NTriples':
                 templates = parseTemplate(config.template)
-                break;
-            case("NQuads"):
+                break
+            case 'NQuads':
                 templates = parseTemplate(config.template)
-                break;
+                break
             default:
-                throw Error(`Serialiser formatting type: "${config.format}" not supported.`);
+                throw Error(
+                    `Serialiser formatting type: "${config.format}" not supported.`,
+                )
         }
-        this.serializers = templates.map(templateString =>
-            generateQuadTemplate(templateString)
+        this.serializers = templates.map((templateString) =>
+            generateQuadTemplate(templateString),
         )
-        if(global.dup_removal){
+        if (global.dup_removal) {
             this.seen = new Set()
-            this.next = (v => {
-                this.serializers.forEach(func => {
+            this.next = (v) => {
+                this.serializers.forEach((func) => {
                     const triple = func(v)
                     // Efficiently detect if item was already passed through this function
-                    if(!this.seen.has(triple) && triple != null){
+                    if (!this.seen.has(triple) && triple != null) {
                         this.seen.add(triple)
                         this.push(triple)
                     }
-                });
-            })
-        }else{
-            this.next = (v =>{
-                this.serializers.forEach(func => {
+                })
+            }
+        } else {
+            this.next = (v) => {
+                this.serializers.forEach((func) => {
                     const triple = func(v)
-                    if(triple != null){
-                        this.push(triple);
+                    if (triple != null) {
+                        this.push(triple)
                     }
-                });
-            })
+                })
+            }
         }
     }
 }
-function parseTemplate(template){
+
+function parseTemplate(template) {
     const fields = template.split(/\s+/)
     let templates = [[]]
     let currIndex = 0
-    fields.forEach(value => {
+    fields.forEach((value) => {
         value = value.trim().replace(/\\n/g, '')
-        if(value.charAt(0) === '.'){
+        if (value.charAt(0) === '.') {
             currIndex++
             templates[currIndex] = [value.slice(1)]
-        }else{
+        } else {
             templates[currIndex].push(value)
         }
     })
-    return templates.slice(0,-1).map(list => list.join(' '))
+    return templates.slice(0, -1).map((list) => list.join(' '))
 }
 
-
-export function generateQuadTemplate (template) {
+export function generateQuadTemplate(template) {
     template = template.trim() // Remove '.' on the end
     const fields = template.split(' ')
     const variables = [] // Hold the indices of fields containing variables. So we can change these later.
-    const tags = new Array(fields.length).fill(""); // Hold the indices of fields containing language tags.
+    const tags = new Array(fields.length).fill('') // Hold the indices of fields containing language tags.
     const values = fields.map((value, index) => {
         // extract langtag and datatpe using regex
         const langTag = value.match(/@([a-zA-Z]+(-[a-zA-Z0-9]+)*)/)
@@ -77,9 +79,9 @@ export function generateQuadTemplate (template) {
             tags[index] = langTag[0]
         }
         if (dataType) {
-            if(tags[index] !== undefined){
+            if (tags[index] !== undefined) {
                 tags[index] += dataType[0]
-            }else {
+            } else {
                 tags[index] = dataType[0]
             }
         }
@@ -91,25 +93,31 @@ export function generateQuadTemplate (template) {
             return value
         }
     })
-    if(tags !== {}){
+    if (tags !== {}) {
         return (obj) => {
-            variables.forEach(i => {
-                if(obj[i[1]] === undefined){
-                    return null;
+            variables.forEach((i) => {
+                if (obj[i[1]].render() === undefined) {
+                    return null
+                } else {
+                    values[i[0]] = obj[i[1]].render() + tags[i[0]]
                 }
-                values[i[0]] = obj[i[1]].render() + tags[i[0]]
             })
-            return values.join(' ') + " ."
+
+            if (values.includes('')) {
+                return undefined
+            } else {
+                return values.join(' ') + ' .'
+            }
         }
-    }else{
+    } else {
         return (obj) => {
-            variables.forEach(i => {
-                if(obj[i[1]] === undefined){
-                    return null;
+            variables.forEach((i) => {
+                if (obj[i[1]] === undefined) {
+                    return null
                 }
                 values[i[0]] = obj[i[1]].render()
             })
-            return values.join(' ') + " ."
+            return values.join(' ') + ' .'
         }
     }
 }

@@ -1,7 +1,7 @@
 digraph {
-    0 [ label = "id:Source_0 \lSource Opeartor\ltype: File \lreference iterator: Iterator {\l    reference: None,\l    reference_formulation: CSVRows,\l    fields: [],\l    alias: None,\l} \lconfig: {\l  \"path\": \"country_info.csv\"\l}\l             " ]
-    1 [ label = "id:Projection_1 \lProjection Operator\lProjected attributes: Country Code, ISO 3166, Name, " ]
-    2 [ label = "id:ExtendOp_2 \lExtension Operator\lExtended pairs: \l ?tm0_sm -> Iri { inner_function: UriEncode { inner_function: TemplateString { value: \"http://example.com/{Country Code}/{Name}\" } } }\l?tm0_p0_0 -> Iri { inner_function: UriEncode { inner_function: Constant { value: \"http://example.com/code\" } } }\l?tm0_o0_0 -> Literal { inner_function: TemplateString { value: \"\\\\{\\\\{\\\\{ {ISO 3166} \\\\}\\\\}\\\\}\" }, dtype_function: None, langtype_function: None }" ]
+    0 [ label = "id:Source_0 \lSource Operator\ltype: File \lreference iterator: Iterator {\l    reference: None,\l    reference_formulation: CSVRows,\l    fields: [],\l    alias: None,\l} \lconfig: {\l  \"path\": \"country_info.csv\"\l}\l             " ]
+    1 [ label = "id:Projection_1 \lProjection Operator\lProjected attributes: Country Code, Name, ISO 3166, " ]
+    2 [ label = "id:ExtendOp_2 \lExtension Operator\lExtended pairs: \l ?tm0_p0_0 -> Iri { inner_function: UriEncode { inner_function: Constant { value: \"http://example.com/code\" } } }\l?tm0_sm -> Iri { inner_function: UriEncode { inner_function: TemplateString { value: \"http://example.com/{Country Code}/{Name}\" } } }\l?tm0_o0_0 -> Literal { inner_function: TemplateString { value: \"\\\\{\\\\{\\\\{ {ISO 3166} \\\\}\\\\}\\\\}\" }, dtype_function: None, langtype_function: None }" ]
     3 [ label = "id:Serialize_3 \lSerializer Operator\lFormat type: NQuads\lTemplate: ?tm0_sm ?tm0_p0_0 ?tm0_o0_0 ." ]
     4 [ label = "id:Sink_4 \lTarget Operator\ltype: StdOut \ldata format: NQuads \lconfig: {}\l             " ]
     0 -> 1 [ label = "Fragment:default" ]

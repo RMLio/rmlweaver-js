@@ -1,0 +1,10 @@
+<http://example.com/6> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example.com/Film> .
+<http://example.com/6> <http://example.com/name> "Insomnia" .
+<http://example.com/6> <http://example.com/year> "2002" .
+<http://example.com/6> <http://example.com/country> "USA" .
+<http://example.com/6> <http://example.com/director> "Christopher Nolan" .
+<http://example.com/5> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://example.com/Film> .
+<http://example.com/5> <http://example.com/name> "Memento" .
+<http://example.com/5> <http://example.com/year> "2000" .
+<http://example.com/5> <http://example.com/country> "USA" .
+<http://example.com/5> <http://example.com/director> "Christopher Nolan" .

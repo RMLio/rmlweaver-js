@@ -1,0 +1,6 @@
+<http://ex.com/989> <http://ex.com/venue> "STEM" .
+<http://ex.com/989> <http://ex.com/venue_id> "68" .
+<http://ex.com/989> <http://ex.com/location> "51.043613-3.717333" .
+<http://ex.com/567> <http://ex.com/venue> "STAM" .
+<http://ex.com/567> <http://ex.com/venue_id> "78" .
+<http://ex.com/567> <http://ex.com/location> "51.043611-3.717222" .
