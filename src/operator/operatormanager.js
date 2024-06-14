@@ -5,6 +5,7 @@ import {SerializerOp} from "./serializerOperator.js";
 import {TargetOp} from "./targetOperator.js";
 import {FragmentOp} from "./fragmentOperator.js";
 import {JoinOperator} from "./joinOperator.js";
+import { RenameOp } from "./renameOperator.js";
 
 
 export class OpManager {
@@ -48,6 +49,9 @@ export function parseOperator(id, type, config){
             break;
         case 'JoinOp':
             operator = new JoinOperator(id, config);
+            break;
+        case 'RenameOp': 
+            operator = new RenameOp(id, config);
             break;
         default:
             throw new Error(`Operator type ${type} is not supported`);

@@ -1,0 +1,29 @@
+PREFIX : <http://example.com/>
+SOURCE films_csv_file1 <films.csv>
+SOURCE films_csv_file2 <film2.csv>
+
+ITERATOR film_full <csvperrow> {
+    FIELD id <id>
+    FIELD name <name>
+    FIELD year <year>
+    FIELD country <country>
+    FIELD directors <director>
+}
+
+ITERATOR film_partial <csvperrow> {
+    FIELD id <id>
+    FIELD name <name>
+    FIELD year <year>
+    FIELD comment <comment>
+}
+
+EXPRESSION films <films_csv_file1.film_full UNION films_csv_file2.film_partial>
+
+:Films :[films.id] {
+    a :Film ;
+    :name [films.name] ;
+    :year [films.year] ;
+    :country [films.country] ;
+    :director [films.directors] ;
+    :comment [films.comment] ;
+}

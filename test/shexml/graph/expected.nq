@@ -1,0 +1,10 @@
+<http://example.com/6> <http://example.com/type> <http://example.com/Film> <http://example.com/MyFilms> .
+<http://example.com/6> <http://example.com/name> "Insomnia" <http://example.com/MyFilms> .
+<http://example.com/6> <http://example.com/year> "2002"^^<http://www.w3.org/2001/XMLSchema#gYear> <http://example.com/MyFilms> .
+<http://example.com/6> <http://example.com/country> "USA" <http://example.com/MyFilms> .
+<http://example.com/6> <http://example.com/director> "Christopher Nolan" <http://example.com/MyFilms> .
+<http://example.com/5> <http://example.com/type> <http://example.com/Film> <http://example.com/MyFilms> .
+<http://example.com/5> <http://example.com/name> "Memento" <http://example.com/MyFilms> .
+<http://example.com/5> <http://example.com/year> "2000"^^<http://www.w3.org/2001/XMLSchema#gYear> <http://example.com/MyFilms> .
+<http://example.com/5> <http://example.com/country> "USA" <http://example.com/MyFilms> .
+<http://example.com/5> <http://example.com/director> "Christopher Nolan" <http://example.com/MyFilms> .
