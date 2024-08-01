@@ -1,6 +1,12 @@
 import { Operator } from './Operator.js'
 import Handlebars from 'handlebars'
-import { BlankNode, Iri, LanguageDataType, Literal } from '../types.js'
+import {
+    BlankNode,
+    DataTypedLiteral,
+    Iri,
+    LanguageLiteral,
+    Literal,
+} from '../types.js'
 import { forEach } from 'most'
 
 export class ExtendOp extends Operator {
@@ -8,7 +14,10 @@ export class ExtendOp extends Operator {
         // In function so recursion is possible
 
         if (key.charAt(0) === '?') key = key.slice(1) // Remove ? When we have a *variable* attribute
-        let regex = /\{([^}]+)}/g // Match text between curly brackets.
+        //let regex = /[^\\]({[^}]+[^\\]})/g // Match text between curly brackets.
+        let regex = /({[^\\{\\}]*})/g
+        let left_escaped_curly_regex = /\\\\\{/g
+        let right_escaped_curly_regex = /\\\\}/g
         const innerFunction =
             mapping.inner_function != null
                 ? this.generateMapping(key, mapping.inner_function)
@@ -24,22 +33,28 @@ export class ExtendOp extends Operator {
             case 'Literal':
                 const dtypeFunction =
                     mapping.dtype_function != null
-                        ? this.generateMapping(key, mapping.inner_function)
+                        ? this.generateMapping(key, mapping.dtype_function)
                         : null
                 const langtypeFunction =
                     mapping.langtype_function != null
-                        ? this.generateMapping(key, mapping.inner_function)
+                        ? this.generateMapping(key, mapping.langtype_function)
                         : null
 
                 return (obj) => {
                     innerFunction(obj)
+                    let literal_value = obj[key]
+                    let obj_value = new Literal(literal_value)
                     if (dtypeFunction !== null) {
                         dtypeFunction(obj)
-                    }
-                    if (langtypeFunction !== null) {
+                        obj_value = new DataTypedLiteral(
+                            literal_value,
+                            obj[key],
+                        )
+                    } else if (langtypeFunction !== null) {
                         langtypeFunction(obj)
+                        obj_value = new LanguageLiteral(literal_value, obj[key])
                     }
-                    obj[key] = new Literal(obj[key])
+                    obj[key] = obj_value
                 }
 
             case 'BlankNode':
@@ -70,21 +85,36 @@ export class ExtendOp extends Operator {
 
             case 'TemplateString':
                 // Match text between curly brackets.
-                let template_string = mapping.value.replace(
-                    regex,
-                    (match, content) => `{{[${content}]}}`,
-                ) // Double brackets for HandleBars.
-                let template = Handlebars.compile(template_string)
-                return (obj) => {
-                    obj[key] = template(obj)
+                //let template_string = mapping.value.replace(
+                //    regex,
+                //    (match, content) => `{{[${content}]}}`,
+                //) // Double brackets for HandleBars.
+                //let template = Handlebars.compile(template_string)
+                let value = mapping.value.replace(
+                    left_escaped_curly_regex,
+                    '\\{',
+                )
+                value = value.replace(right_escaped_curly_regex, '\\}')
+                return (sol_map) => {
+                    let result = value.replace(
+                        regex,
+                        (match, captured, offset, full_string) => {
+                            let key = captured.substring(1, captured.length - 1)
+                            return sol_map[key]
+                        },
+                    )
+                    result = result.replace(/\\{/g, '{')
+                    result = result.replace(/\\}/g, '}')
+                    sol_map[key] = result
                 }
 
             case 'TemplateFunctionValue':
-                let template_string_2 = mapping.template.replace(
-                    regex,
-                    (match, content) => `{{[${content}]}}`,
-                ) // Double brackets for HandleBars.
-                let template2 = Handlebars.compile(template_string_2)
+                let template = mapping.template.replace(
+                    left_escaped_curly_regex,
+                    '\\{',
+                )
+                template = template.replace(right_escaped_curly_regex, '\\}')
+
                 let var_function_pairs = {}
                 for (let pair of mapping.variable_function_pairs) {
                     let variable = pair[0]
@@ -94,13 +124,24 @@ export class ExtendOp extends Operator {
                 }
 
                 return (obj) => {
-                    let temp_val = {}; 
+                    let temp_val = {}
                     for (let variable in var_function_pairs) {
                         let nest_func = var_function_pairs[variable]
                         nest_func(obj)
                         temp_val[variable] = obj[key]
                     }
-                    obj[key] = template2(temp_val)
+
+                    let result = template.replace(
+                        regex,
+                        (match, captured, offset, full_string) => {
+                            let key = captured.substring(1, captured.length - 1)
+                            return temp_val[key]
+                        },
+                    )
+                    result = result.replace(/\\{/g, '{')
+                    result = result.replace(/\\}/g, '}')
+
+                    obj[key] = result
                 }
 
             case 'Concatenate':
