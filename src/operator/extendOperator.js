@@ -27,7 +27,17 @@ export class ExtendOp extends Operator {
             case 'Iri':
                 return (obj) => {
                     innerFunction(obj)
-                    obj[key] = new Iri(obj[key])
+                    let iri_value = ''
+                    if (
+                        mapping.base_iri != null &&
+                        URL.canParse(obj[key], mapping.base_iri) &&
+                        !URL.canParse(obj[key], undefined)
+                    ) {
+                        iri_value = mapping.base_iri + obj[key]
+                    } else {
+                        iri_value = obj[key]
+                    }
+                    obj[key] = new Iri(iri_value)
                 }
 
             case 'Literal':
