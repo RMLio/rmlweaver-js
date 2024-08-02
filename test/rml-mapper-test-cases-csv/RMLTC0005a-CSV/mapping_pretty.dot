@@ -1,7 +1,7 @@
 digraph {
     0 [ label = "id:Source_0 \lSource Operator\ltype: File \lreference iterator: Iterator {\l    reference: None,\l    reference_formulation: CSVRows,\l    fields: [],\l    alias: None,\l} \lconfig: {\l  \"path\": \"ious.csv\"\l}\l             " ]
-    1 [ label = "id:Projection_1 \lProjection Operator\lProjected attributes: fname, amount, lname, " ]
-    2 [ label = "id:ExtendOp_2 \lExtension Operator\lExtended pairs: \l ?tm0_sm -> Iri { base_iri: None, inner_function: UriEncode { inner_function: TemplateString { value: \"http://example.com/{fname};{lname}\" } } }\l?tm0_p0_0 -> Iri { base_iri: None, inner_function: UriEncode { inner_function: Constant { value: \"http://example.com/owes\" } } }\l?tm0_o0_0 -> Literal { inner_function: Reference { value: \"amount\" }, dtype_function: None, langtype_function: None }" ]
+    1 [ label = "id:Projection_1 \lProjection Operator\lProjected attributes: fname, lname, amount, " ]
+    2 [ label = "id:ExtendOp_2 \lExtension Operator\lExtended pairs: \l ?tm0_o0_0 -> Literal { inner_function: Reference { value: \"amount\" }, dtype_function: None, langtype_function: None }\l?tm0_p0_0 -> Iri { base_iri: Some(\"http://example.com/base/\"), inner_function: UriEncode { inner_function: Constant { value: \"http://example.com/owes\" } } }\l?tm0_sm -> Iri { base_iri: Some(\"http://example.com/base/\"), inner_function: UriEncode { inner_function: TemplateString { value: \"http://example.com/{fname};{lname}\" } } }" ]
     3 [ label = "id:Serialize_3 \lSerializer Operator\lFormat type: NQuads\lTemplate: ?tm0_sm <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> .\l?tm0_sm ?tm0_p0_0 ?tm0_o0_0 ." ]
     4 [ label = "id:Sink_4 \lTarget Operator\ltype: StdOut \ldata format: NQuads \lconfig: {}\l             " ]
     0 -> 1 [ label = "Fragment:default" ]
