@@ -65,7 +65,7 @@ export function generateQuadTemplate(template) {
     const fields = template.split(' ')
     const variables = [] // Hold the indices of fields containing variables. So we can change these later.
     const tags = new Array(fields.length).fill('') // Hold the indices of fields containing language tags.
-    const values = fields.map((value, index) => {
+    let values = fields.map((value, index) => {
         // extract langtag and datatpe using regex
         const langTag = value.match(/@([a-zA-Z]+(-[a-zA-Z0-9]+)*)/)
         const dataType = value.match(/\^\^<(.+)>/)
@@ -95,15 +95,19 @@ export function generateQuadTemplate(template) {
     })
     if (tags !== {}) {
         return (obj) => {
+            let error_flag = false
             variables.forEach((i) => {
-                if (obj[i[1]].render() === undefined) {
-                    return null
+                if (
+                    obj[i[1]] === undefined ||
+                    obj[i[1]].render() === undefined
+                ) {
+                    error_flag = true
                 } else {
                     values[i[0]] = obj[i[1]].render() + tags[i[0]]
                 }
             })
 
-            if (values.includes('')) {
+            if (values.includes('') || error_flag) {
                 return undefined
             } else {
                 return values.join(' ') + ' .'

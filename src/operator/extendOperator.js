@@ -10,7 +10,7 @@ import {
 import { forEach } from 'most'
 
 export class ExtendOp extends Operator {
-    generateMapping(key, mapping) {
+    generateMapping(key, extend_func) {
         // In function so recursion is possible
 
         if (key.charAt(0) === '?') key = key.slice(1) // Remove ? When we have a *variable* attribute
@@ -19,35 +19,42 @@ export class ExtendOp extends Operator {
         let left_escaped_curly_regex = /\\\\\{/g
         let right_escaped_curly_regex = /\\\\}/g
         const innerFunction =
-            mapping.inner_function != null
-                ? this.generateMapping(key, mapping.inner_function)
+            extend_func.inner_function != null
+                ? this.generateMapping(key, extend_func.inner_function)
                 : null
 
-        switch (mapping.type) {
+        switch (extend_func.type) {
             case 'Iri':
                 return (obj) => {
                     innerFunction(obj)
                     let iri_value = ''
                     if (
-                        mapping.base_iri != null &&
-                        URL.canParse(obj[key], mapping.base_iri) &&
+                        extend_func.base_iri != null &&
+                        URL.canParse(obj[key], extend_func.base_iri) &&
                         !URL.canParse(obj[key], undefined)
                     ) {
-                        iri_value = mapping.base_iri + obj[key]
+                        iri_value = extend_func.base_iri + obj[key]
                     } else {
                         iri_value = obj[key]
                     }
-                    obj[key] = new Iri(iri_value)
+                    if ( iri_value.search(" ") >= 0 ) {
+                        obj[key] = undefined
+                    } else {
+                        obj[key] = new Iri(iri_value)
+                    }
                 }
 
             case 'Literal':
                 const dtypeFunction =
-                    mapping.dtype_function != null
-                        ? this.generateMapping(key, mapping.dtype_function)
+                    extend_func.dtype_function != null
+                        ? this.generateMapping(key, extend_func.dtype_function)
                         : null
                 const langtypeFunction =
-                    mapping.langtype_function != null
-                        ? this.generateMapping(key, mapping.langtype_function)
+                    extend_func.langtype_function != null
+                        ? this.generateMapping(
+                              key,
+                              extend_func.langtype_function,
+                          )
                         : null
 
                 return (obj) => {
@@ -77,7 +84,7 @@ export class ExtendOp extends Operator {
                 return (obj) => {
                     innerFunction(obj)
 
-                    obj[key] = encodeURI(obj[key])
+                    obj[key] = encodeURIComponent(obj[key])
                         .replace(',', '%2C')
                         .replace('(', '%28')
                         .replace(')', '%29') // Encode URI, Maybe manually in the future to match RML mapper.
@@ -85,12 +92,12 @@ export class ExtendOp extends Operator {
 
             case 'Reference':
                 return (obj) => {
-                    obj[key] = obj[mapping.value]
+                    obj[key] = obj[extend_func.value]
                 }
 
             case 'Constant':
                 return (obj) => {
-                    obj[key] = mapping.value
+                    obj[key] = extend_func.value
                 }
 
             case 'TemplateString':
@@ -100,7 +107,7 @@ export class ExtendOp extends Operator {
                 //    (match, content) => `{{[${content}]}}`,
                 //) // Double brackets for HandleBars.
                 //let template = Handlebars.compile(template_string)
-                let value = mapping.value.replace(
+                let value = extend_func.value.replace(
                     left_escaped_curly_regex,
                     '\\{',
                 )
@@ -119,14 +126,14 @@ export class ExtendOp extends Operator {
                 }
 
             case 'TemplateFunctionValue':
-                let template = mapping.template.replace(
+                let template = extend_func.template.replace(
                     left_escaped_curly_regex,
                     '\\{',
                 )
                 template = template.replace(right_escaped_curly_regex, '\\}')
 
                 let var_function_pairs = {}
-                for (let pair of mapping.variable_function_pairs) {
+                for (let pair of extend_func.variable_function_pairs) {
                     let variable = pair[0]
                     let ext_func = pair[1]
                     ext_func = this.generateMapping(key, ext_func)
@@ -157,23 +164,23 @@ export class ExtendOp extends Operator {
             case 'Concatenate':
                 const left_function = this.generateMapping(
                     key,
-                    mapping.left_value,
+                    extend_func.left_value,
                 )
                 const right_function = this.generateMapping(
                     key,
-                    mapping.right_value,
+                    extend_func.right_value,
                 )
                 return (obj) => {
                     left_function(obj)
                     const left_value = obj[key]
                     right_function(obj)
                     const right_value = obj[key]
-                    obj[key] = left_value + mapping.separator + right_value
+                    obj[key] = left_value + extend_func.separator + right_value
                 }
 
             default:
                 throw Error(
-                    `Type (${mapping.type}) found in extend operator not supported!`,
+                    `Type (${extend_func.type}) found in extend operator not supported!`,
                 )
         }
     }
