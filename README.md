@@ -6,7 +6,7 @@
   - [Usage](#usage)
     - [Execute a Dot File](#execute-a-dot-file)
     - [Execute tests](#execute-tests)
-    - [Future works](#future-works)
+  - [Future works](#future-works)
   - [Acknowledgement](#acknowledgement)
 <!--toc:end-->
 
@@ -41,9 +41,9 @@ npm run execute_dot -- ${file} -debug
 ```
 
 ### Execute tests
-RML test cases, for CSV input, are located under the folder `./test/rml-mapper-test-cases-csv/`. 
+RML test cases, for CSV input, are located under the folder [`./test/rml-mapper-test-cases-csv/`](./test/rml-mapper-test-cases-csv/). 
 
-ShExML test cases are located under the folder `./test/shexml/`. 
+ShExML test cases are located under the folder [`./test/shexml/`](./test/shexml/). 
 
 To execute the tests, use:
 
@@ -51,7 +51,7 @@ To execute the tests, use:
 npm test
 ```
 
-### Future works:
+## Future works:
 
 -   LeftJoin and RightJoin.
 -   More file types for source and target.
