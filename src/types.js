@@ -12,18 +12,6 @@ class DataType {
     }
 }
 
-export class LanguageDataType extends DataType {
-    content = null
-    language = ''
-    constructor(content, language) {
-        super(content)
-        this.language = language
-    }
-    render() {
-        return this.content.render() + this.language
-    }
-}
-
 export class Iri extends DataType {
     constructor(value) {
         super(value)
@@ -36,7 +24,6 @@ export class Iri extends DataType {
         return `<${this.value}>`
     }
 }
-
 export class Literal extends DataType {
     constructor(value) {
         super(value)
@@ -47,6 +34,27 @@ export class Literal extends DataType {
             return undefined
         }
         return `"${this.value}"`
+    }
+}
+
+export class DataTypedLiteral extends Literal {
+
+    constructor(value, datatype) {
+        super(value)
+        this.datatype = datatype
+    }
+    render() {
+        return super.render() + '^^' + "<"  + this.datatype + ">"
+    }
+}
+
+export class LanguageLiteral extends Literal {
+    constructor(value, language) {
+        super(value)
+        this.language = language
+    }
+    render() {
+        return super.render() + '@' + this.language
     }
 }
 export class BlankNode extends DataType {
