@@ -20,6 +20,9 @@ Based on RX-JS streams, RMLWeaver-JS maps the heterogeneous data to RDF
 knowledge graphs in streaming manner. 
 This results in an overall lower memory usage. 
 
+## Disclaimer 
+***This implementation is used as a platform for fast iterations of implementing the underlying algebraic formalisms!***
+
 ## Usage
 
 ### Execute a Dot File
