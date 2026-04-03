@@ -12,7 +12,7 @@
   "dependencies": {
     "dotparser": "^1.1.1",
     "fast-csv": "^4.3.6",
-    "handlebars": "^4.7.8",
+    "handlebars": "^4.7.9",
     "mocha": "^10.2.0",
     "most": "^1.9.0",
     "node-fetch": "^3.3.2",
